@@ -2,7 +2,10 @@ const express = require("express");
 const router = express.Router();
 const Lesson = require("../models/lesson");
 const Topic = require("../models/topic");
-const { authenticateToken, authorizeRoles } = require("../middleware/authMiddleware"); // Assuming you have these middlewares
+const {
+  authenticateToken,
+  authorizeRoles,
+} = require("../middleware/authMiddleware"); // Assuming you have these middlewares
 
 /**
  * @openapi
@@ -251,3 +254,40 @@ router.get("/lessons/:id/topics", authenticateToken, async (req, res) => {
 });
 
 module.exports = router;
+
+/**
+ * @openapi
+ * /api/lessons/course/{courseId}:
+ *   get:
+ *     summary: Get all lessons for a specific course by courseId
+ *     tags:
+ *       - Lessons
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: courseId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the course to which the lessons belong
+ *     responses:
+ *       200:
+ *         description: A list of lessons for the specified course
+ *       401:
+ *         description: Unauthorized
+ *       404:
+ *         description: Course or lessons not found
+ */
+router.get("/lessons/course/:courseId", authenticateToken, async (req, res) => {
+  try {
+    const lessons = await Lesson.find({ courseId: req.params.courseId });
+    if (!lessons.length)
+      return res
+        .status(404)
+        .json({ error: "No lessons found for this course" });
+    res.status(200).json(lessons);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});

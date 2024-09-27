@@ -30,3 +30,19 @@ exports.deleteLesson = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+exports.getLessonsByCourseId = async (req, res) => {
+  try {
+    const { courseId } = req.params;
+    const lessons = await Lesson.find({ courseId });
+
+    if (!lessons.length) {
+      return res
+        .status(404)
+        .json({ error: "No lessons found for this course" });
+    }
+
+    res.status(200).json(lessons);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};

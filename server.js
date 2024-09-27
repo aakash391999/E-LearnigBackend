@@ -9,7 +9,8 @@ const lessonRoutes = require("./routes/lessonRoutes");
 const topicRoutes = require("./routes/topicRoutes");
 const path = require("path");
 const app = express();
-const cors = require('cors');
+const cors = require("cors");
+const tf = require("@tensorflow/tfjs");
 
 // Connect to the database
 connectDB();
@@ -19,7 +20,7 @@ app.use(express.json());
 // Serve static files for uploaded images
 app.use(
   cors({
-    origin: "http://localhost:3001", // React app's URL
+    origin: "http://localhost:3002", // React app's URL
   })
 );
 
@@ -80,5 +81,7 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
+// Define a simple sequential model
+
 
 module.exports = app;
