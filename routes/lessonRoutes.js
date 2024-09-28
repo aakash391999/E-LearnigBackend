@@ -145,6 +145,14 @@ router.get("/lessons/:id", authenticateToken, async (req, res) => {
  *               courseId:
  *                 type: string
  *                 description: The ID of the course to which the lesson belongs
+ *               topics:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                   description: An array of topic IDs
+ *               content:
+ *                 type: string
+ *                 description: The full content of the lesson
  *     responses:
  *       200:
  *         description: Lesson updated successfully
@@ -163,16 +171,30 @@ router.put(
   authorizeRoles("admin"),
   async (req, res) => {
     try {
-      const lesson = await Lesson.findByIdAndUpdate(req.params.id, req.body, {
-        new: true,
-      });
-      if (!lesson) return res.status(404).json({ error: "Lesson not found" });
-      res.status(200).json(lesson);
+      const { title, description, courseId, topics, content } = req.body;
+
+      const updatedLesson = await Lesson.findByIdAndUpdate(
+        req.params.id,
+        {
+          title,
+          description,
+          courseId,
+          topics,
+          content, // Updating the content as well
+        },
+        { new: true, runValidators: true } // Return the updated document and validate fields
+      );
+
+      if (!updatedLesson)
+        return res.status(404).json({ error: "Lesson not found" });
+
+      res.status(200).json(updatedLesson);
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
   }
 );
+
 
 /**
  * @openapi

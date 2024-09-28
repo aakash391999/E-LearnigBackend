@@ -13,14 +13,14 @@ const cors = require("cors");
 const tf = require("@tensorflow/tfjs");
 
 // Connect to the database
-connectDB();
+connectDB();  
 
 // Middleware for JSON
 app.use(express.json());
 // Serve static files for uploaded images
 app.use(
   cors({
-    origin: "http://localhost:3002", // React app's URL
+    origin: "http://localhost:3001", // React app's URL
   })
 );
 
