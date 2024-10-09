@@ -6,6 +6,10 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   role: { type: String, enum: ['user', 'admin'], default: 'user' },
+  profilePhoto: { type: String, required: false }, // Optional field for profile photo URL
+  phoneNumber: { type: String, required: false }, // Optional field for phone number
+  courses: [{ type: String, required: false }], // Array of course IDs or names
+  knowledge: { type: String, required: false }, // Optional field for additional knowledge
 });
 
 // Hash password before saving

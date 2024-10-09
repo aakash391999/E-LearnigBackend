@@ -9,7 +9,7 @@ const lessonSchema = new mongoose.Schema({
     required: true,
   },
   topics: [{ type: mongoose.Schema.Types.ObjectId, ref: "Topic" }],
-  content: { type: String, required: true }, 
+  content: { type: String}, 
 });
 
 module.exports = mongoose.model("Lesson", lessonSchema);
