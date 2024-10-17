@@ -1,4 +1,4 @@
-// require("dotenv").config();
+require("dotenv").config();
 const express = require("express");
 const connectDB = require("./config/db");
 const userRoutes = require("./routes/userRoutes");
@@ -10,6 +10,7 @@ const topicRoutes = require("./routes/topicRoutes");
 const path = require("path");
 const app = express();
 const cors = require("cors");
+const tf = require("@tensorflow/tfjs");
 
 connectDB();
 
@@ -75,7 +76,7 @@ const swaggerDocs = swaggerJsdoc(swaggerOptions);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // Start the server
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
