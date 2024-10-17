@@ -9,7 +9,7 @@ const lessonRoutes = require("./routes/lessonRoutes");
 const topicRoutes = require("./routes/topicRoutes");
 const path = require("path");
 const app = express();
-const cors = require("cors");
+// const cors = require("cors");
 const tf = require("@tensorflow/tfjs");
 
 connectDB();
@@ -17,11 +17,11 @@ connectDB();
 // Middleware for JSON
 app.use(express.json());
 // Serve static files for uploaded images
-app.use(
-  cors({
-    origin: "http://localhost:3001", // React app's URL
-  })
-);
+// app.use(
+//   cors({
+//     origin: "http://localhost:3001", // React app's URL
+//   })
+// );
 
 app.use(express.urlencoded({ extended: true }));
 
