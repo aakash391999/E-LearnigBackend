@@ -130,3 +130,4 @@ dist
 # Adjust if necessary for your project structure
 # Ensure your project includes necessary files for deployment:
 # server.js, config/ directory, routes/, uploads/, controllers/, models/, package.json, package-lock.json
+ 
